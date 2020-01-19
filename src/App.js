@@ -1,10 +1,14 @@
 import React from "react";
-import GlobalFeed from 'pages/globalFeed';
+import Routes from "routes/index.js";
+import { BrowserRouter as Router } from "react-router-dom";
+import { TopBar } from "components/topBar";
 function App() {
   return (
     <div className="App">
-      <header className="App-header"></header>
-      <GlobalFeed />
+      <Router>
+        <TopBar />
+        <Routes />
+      </Router>
     </div>
   );
 }
