@@ -39,7 +39,6 @@ export const Article = ({ item }) => {
       <ul className='tag-list'>
         {tagList && tagList.map(tag => (
           <Tag item={tag} key={tag} />
-
         ))}
       </ul>
     </div>
