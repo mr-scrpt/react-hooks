@@ -3,6 +3,8 @@ import { Switch, Route } from "react-router-dom";
 import Article from "pages/article";
 import GlobalFeed from "pages/globalFeed";
 import { Autentifications } from "pages/autentifications";
+
+
 export default () => {
   return (
     <div>
