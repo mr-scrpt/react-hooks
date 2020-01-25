@@ -26,7 +26,7 @@ export const Autentifications = ({ match: { path } }) => {
     setIsSuccessefullSabmit(true);
     setCurrentUserState(state => ({
       ...state,
-      isLoggedId: true,
+      isLoggedIn: true,
       isLoading: false,
       currentUser: response.user
     }))
