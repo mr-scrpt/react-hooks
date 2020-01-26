@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Feeds } from 'components/feeds';
 import { useFetch } from 'hooks/useFetch';
+import { Pagination } from 'components/pagination';
+import { getPaginators } from 'helpers/getPaginators';
+import { limit } from 'constant';
+import { stringify } from 'query-string';
 
-
-const GlobalFeed = (props) => {
+const GlobalFeed = ({ location: { search }, match: { url } }) => {
+  const { currentPage, offset } = getPaginators(search);
   const [articlesList, setArticlesList] = useState([]);
-  const apiUrl = `articles?limit=10&offset=0`;
+  const stingifyParams = stringify({
+    limit, offset
+  })
+  const apiUrl = `articles?${stingifyParams}`;
   const [{ response, isLoading, error }, doFetch] = useFetch(apiUrl);
+
 
   useEffect(() => {
     doFetch();
-  }, [doFetch])
+  }, [doFetch, currentPage])
 
 
   useEffect(() => {
@@ -32,7 +40,12 @@ const GlobalFeed = (props) => {
           <div className="col-md-9">
             {isLoading && <div>Идет загрузка статей...</div>}
             {error && <div>Ошибка</div>}
-            <Feeds articles={articlesList} />
+            {!isLoading && articlesList && response && (
+              <>
+                <Feeds articles={articlesList} />
+                <Pagination total={response.articlesCount} limit={limit} url={url} currentPage={currentPage} />
+              </>
+            )}
           </div>
           <div className="col-md-3">
             Популярыне теги
