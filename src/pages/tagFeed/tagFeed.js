@@ -10,19 +10,21 @@ import { ShowLoading } from 'components/showLoading';
 import { ShowErrors } from 'components/showErrors';
 import { FeedToggler } from 'components/feedToggler';
 
-export const GlobalFeed = ({ location: { search }, match: { url } }) => {
+export const TagFeed = ({ location: { search }, match: { url, params: { tagName } } }) => {
   const { currentPage, offset } = getPaginators(search);
   const [articlesList, setArticlesList] = useState([]);
   const stingifyParams = stringify({
-    limit, offset
+    limit, offset, tag: tagName
   })
+
+
   const apiUrl = `articles?${stingifyParams}`;
   const [{ response, isLoading, error }, doFetch] = useFetch(apiUrl);
 
 
   useEffect(() => {
     doFetch();
-  }, [doFetch, currentPage])
+  }, [doFetch, currentPage, tagName])
 
 
   useEffect(() => {
@@ -41,8 +43,7 @@ export const GlobalFeed = ({ location: { search }, match: { url } }) => {
       <div className="container page">
         <div className="row">
           <div className="col-md-9">
-            <FeedToggler tagName={'foo'} />
-            {/* {isLoading && <div>Идет загрузка статей...</div>} */}
+            <FeedToggler tagName={tagName} />
             <ShowLoading loading={isLoading} />
             <ShowErrors errors={error} />
 

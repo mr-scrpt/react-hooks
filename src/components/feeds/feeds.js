@@ -1,6 +1,5 @@
 import { Article } from 'components/article';
-import { useFetch } from 'hooks/useFetch';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 export const Feeds = ({ articles }) => {
   return (

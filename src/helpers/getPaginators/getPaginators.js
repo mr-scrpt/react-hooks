@@ -1,5 +1,5 @@
 import { limit } from 'constant';
-import { parse, stringify } from 'query-string';
+import { parse } from 'query-string';
 
 export const getPaginators = search => {
 

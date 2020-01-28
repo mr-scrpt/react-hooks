@@ -6,16 +6,15 @@ export const Article = ({ item }) => {
   const {
     title,
     slug,
-    body,
     createdAt,
-    updatedAt,
     tagList,
     description,
     author: {
       username, image
-    },
-    favorited,
-    favoritesCount } = item;
+    }
+  } = item;
+  const classes = `tag-default tag-pill tag-outline`;
+  const prefix = 'tags/';
   return (
     <div className='article-preview'>
       <div className='article-meta'>
@@ -38,7 +37,7 @@ export const Article = ({ item }) => {
       </Link>
       <ul className='tag-list'>
         {tagList && tagList.map(tag => (
-          <Tag item={tag} key={tag} />
+          <Tag item={tag} key={tag} urlPrefix={prefix} classes={classes} />
         ))}
       </ul>
     </div>
