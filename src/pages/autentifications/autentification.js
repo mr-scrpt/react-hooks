@@ -18,26 +18,20 @@ export const Autentifications = ({ match: { path } }) => {
   const apiURL = isLoginPage ? 'users/login' : 'users'
   const [{ response, isLoading, error }, doFetch] = useFetch(apiURL);
   const [, setToken] = useLocalStorage('token');
-  const [, setCurrentUserState] = useContext(CurrentUserContext);
+  const [, dispatch] = useContext(CurrentUserContext);
 
   useEffect(() => {
     if (!response) return
     setToken(response.user.token)
     setIsSuccessefullSabmit(true);
-    setCurrentUserState(state => ({
-      ...state,
-      isLoggedIn: true,
-      isLoading: false,
-      currentUser: response.user
-    }))
-  }, [response, setToken, setCurrentUserState])
+    dispatch({ type: 'SET_AUTHORIZED', payload: response.user })
+
+  }, [response, setToken, dispatch])
 
   useEffect(() => {
     if (error && error.errors) {
       const errors = errorsList(error.errors)
       setErrors(errors)
-      console.log('ошибки');
-
     }
   }, [error])
 

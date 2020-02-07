@@ -8,19 +8,19 @@ export const useFetch = url => {
   const [error, setError] = useState(null);
   const [options, setOptions] = useState({});
   const [token] = useLocalStorage('token');
+
   const doFetch = useCallback(async (options = {}) => {
     setOptions(options);
     setIsLoading(true)
   }, [])
 
   useEffect(() => {
+    let skipGetResponseAfterDestroy = false;
+
     if (!isLoading) return;
-
-
 
     (async () => {
       try {
-
         const requestOptins = {
           ...options, ...{
             headers: {
@@ -30,13 +30,22 @@ export const useFetch = url => {
         }
 
         const res = await axios(`${baseURL}${url}`, requestOptins);
-        setResponse(res.data);
+
+        !skipGetResponseAfterDestroy && setResponse(res.data);
+
       } catch (error) {
-        setError(error.response.data);
+
+        !skipGetResponseAfterDestroy && setError(error.response.data);
+
       } finally {
-        setIsLoading(false)
+
+        !skipGetResponseAfterDestroy && setIsLoading(false)
+
       }
     })()
+
+
+    return () => { skipGetResponseAfterDestroy = true }
   }, [isLoading, options, url, token]);
 
   return [{

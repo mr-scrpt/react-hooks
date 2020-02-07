@@ -5,8 +5,6 @@ import { CurrentUserContext } from 'contexts/currentUserContext';
 export const TopBar = () => {
   const [{ isLoggedIn, currentUser }] = useContext(CurrentUserContext);
 
-  console.log(isLoggedIn);
-
   return (
     <nav className="navbar navbar-light">
       <div className="container">
@@ -36,14 +34,21 @@ export const TopBar = () => {
           {isLoggedIn && (
             <>
               <li className='nav-item'>
-                <NavLink to='/artice/new' className='nav-link'>
+                <NavLink to='/articles/new' className='nav-link'>
                   <i className='ion-compose'></i>
                   &nbsp; Создать замтеку
                   </NavLink>
               </li>
 
               <li className='nav-item'>
-                <NavLink to={`/profile/${currentUser.username}`} className='nav-link'>
+                <NavLink to='/settings' className='nav-link'>
+                  <i className='ion-gear-a'></i>
+                  &nbsp; Настройки
+                  </NavLink>
+              </li>
+
+              <li className='nav-item'>
+                <NavLink to={`/profiles/${currentUser.username}`} className='nav-link'>
                   <img className="user-pic" src={currentUser.image ? currentUser.image : 'https://dummyimage.com/100x100/abq/fre'} alt={`Аватарка ${currentUser.username}`} />
                   &nbsp;  {currentUser.username}
                 </NavLink>

@@ -1,20 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Tag } from 'components/tag';
+import { TagList } from 'components/tagList';
+import { AddToFavorite } from 'components/addToFavorite';
+import { CurrentUserContext } from 'contexts/currentUserContext';
 
-export const Article = ({ item }) => {
+export const ArticleSnippet = ({ item }) => {
   const {
     title,
     slug,
     createdAt,
     tagList,
     description,
+    favorited,
+    favoritesCount,
     author: {
       username, image
     }
   } = item;
-  const classes = `tag-default tag-pill tag-outline`;
-  const prefix = 'tags/';
+  const [currentUserState] = useContext(CurrentUserContext);
+
   return (
     <div className='article-preview'>
       <div className='article-meta'>
@@ -27,8 +31,17 @@ export const Article = ({ item }) => {
           </Link>
           <span className='data'>{createdAt}</span>
         </div>
+        <div className="pull-xs-right">
+          <AddToFavorite
+            isFavorited={favorited}
+            favoritesCount={favoritesCount}
+            articleSlug={slug}
+            currentUser={currentUserState}
+          />
+        </div>
+
       </div>
-      <Link className="preview-link" to={`articles/${slug}`}>
+      <Link className="preview-link" to={`/articles/${slug}`}>
         <h1 className="">{title}</h1>
       </Link>
       <p>{description}</p>
@@ -36,10 +49,9 @@ export const Article = ({ item }) => {
         Читать далее...
       </Link>
       <ul className='tag-list'>
-        {tagList && tagList.map(tag => (
-          <Tag item={tag} key={tag} urlPrefix={prefix} classes={classes} />
-        ))}
+        <TagList tagList={tagList} />
       </ul>
+
     </div>
   )
 }

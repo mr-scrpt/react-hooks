@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const ShowErrors = ({ error }) => {
-  if (!error) return null;
+export const ShowErrors = ({ errors }) => {
+  if (!errors) return null;
   return <div>Ошибка!</div>
 }

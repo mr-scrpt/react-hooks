@@ -1,11 +1,11 @@
-import { Article } from 'components/article';
 import React from 'react';
+import { ArticleSnippet } from 'components/articleSnippet';
 
 export const Feeds = ({ articles }) => {
   return (
     <>
       {articles.map((article, idx) => (
-        <Article item={article} key={idx} />
+        <ArticleSnippet item={article} key={idx} />
       ))}
     </>
   )

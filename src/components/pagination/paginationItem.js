@@ -10,7 +10,8 @@ export const PaginationItem = ({ page, currentPage, url }) => {
     'page-item': true,
     'active': isActivePage
   })
-  const urlLink = page === 1 ? '/' : `${url}?page=${page}`;
+  const urlLink = page === 1 ? (`${url}` || `/`) : `${url}?page=${page}`;
+
 
   return <li className={pageClasses}>
     {
